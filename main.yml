@@ -1,1 +1,20 @@
+- name: check reachable hosts
+  hosts: all
+  gather_facts: no
+  tasks:
+    - command: ping -cl {{ inventory_hostname }}
+#      delegate_to: localhoat
+      register: ping_result
+      ignore_errors: yes
+    - group_by: key=reachable
+      when: ping_result is success
+
+- name: your play
+  hosts: reachable
+  gather_facts: yes
+  tasks:
+    - name: Ensure NTP is installed
+      yum:  name=ntp state=present
+    - name: Ensure NTP is running
+      service: name=ntpd state=started enabled=yes
 
