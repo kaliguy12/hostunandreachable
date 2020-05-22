@@ -6,11 +6,11 @@
 #      delegate_to: localhoat
       register: ping_result
       ignore_errors: yes
-    - group_by: key=all
+    - group_by: key=reachable
       when: ping_result is success
 
 - name: your play
-  hosts: all
+  hosts: reachable
   gather_facts: yes
   tasks:
     - name: Ensure NTP is installed
