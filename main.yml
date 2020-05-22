@@ -1,7 +1,6 @@
 - name: check reachable hosts
   hosts: all
   gather_facts: no
-  ignore_unreachable: true
   tasks:
     - command: ping -cl {{ inventory_hostname }}
 #      delegate_to: localhoat
